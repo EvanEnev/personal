@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-paper: #f2f2ef;
+  --color-ink: #111111;
+  --color-body: #2b2b2b;
+  --color-muted: #555555;
+  --color-line: #c9c9c4;
+  --color-accent: #c2361a;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(1.5rem); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-inter-tight), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+}
+
+@page {
+  size: A4;
+  margin: 10mm 12mm;
+}
+
+@layer base {
+  .dark:not(:has(#cv)) {
+    --color-paper: #111111;
+    --color-ink: #f2f2ef;
+    --color-body: #d4d4cf;
+    --color-muted: #a3a39e;
+    --color-line: #3a3a38;
+    color-scheme: dark;
+  }
+  html {
+    scroll-behavior: smooth;
+    interpolate-size: allow-keywords;
+  }
+  body {
+    @apply bg-paper font-sans print:bg-white text-[17px] leading-relaxed text-ink antialiased;
+  }
+}
+
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+  }
 }

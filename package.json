@@ -6,14 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cv": "for l in en ru; do chromium --headless --no-pdf-header-footer --print-to-pdf=public/Ivan-Bubenev-CV-$l.pdf http://localhost:3000/$l/cv; done"
   },
   "dependencies": {
+    "motion": "^14.14.0",
     "next": "16.4.6",
     "react": "19.3.0",
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@fontsource/inter-tight": "^5.3.0",
     "@tailwindcss/turbopack": "4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
